@@ -1,0 +1,216 @@
+/* ============================================================
+   MATDAN — Animations CSS
+   ============================================================ */
+
+/* ---- Page enter animations ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes flipInBottom {
+  from { opacity: 0; transform: rotateX(-90deg) translateY(40px); }
+  to   { opacity: 1; transform: rotateX(0) translateY(0); }
+}
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- CRT flicker on load ---- */
+@keyframes crtFlicker {
+  0%   { opacity: 0.8; }
+  10%  { opacity: 1; }
+  20%  { opacity: 0.85; }
+  30%  { opacity: 1; }
+  40%  { opacity: 0.9; }
+  50%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+.crt-flicker { animation: crtFlicker 1s ease-out forwards; }
+
+/* ---- Slide wipe page transition ---- */
+.page-transition-out {
+  animation: slideWipeOut 0.4s ease-in forwards;
+}
+.page-transition-in {
+  animation: slideWipeIn 0.4s ease-out forwards;
+}
+@keyframes slideWipeOut {
+  to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes slideWipeIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ---- Card reveal on scroll ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Floating flag ribbon ---- */
+.flag-ribbon {
+  position: absolute;
+  top: 0;
+  right: 6%;
+  width: 50px;
+  height: 120px;
+  background: linear-gradient(180deg, var(--saffron) 33.3%, var(--white) 33.3% 66.6%, var(--ind-green) 66.6%);
+  box-shadow: 0 0 20px rgba(255,153,51,0.4);
+  animation: flagWave 3s ease-in-out infinite;
+  transform-origin: top center;
+}
+@keyframes flagWave {
+  0%,100% { transform: skewX(0deg) scaleX(1); }
+  25%      { transform: skewX(3deg) scaleX(1.03); }
+  75%      { transform: skewX(-3deg) scaleX(0.97); }
+}
+
+/* ---- HUD scan enter animation ---- */
+.hud-scan-enter {
+  position: relative;
+  overflow: hidden;
+}
+.hud-scan-enter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,153,51,0.08) 50%, transparent 100%);
+  animation: scanEnter 1.2s ease-out forwards;
+  z-index: 5;
+  pointer-events: none;
+}
+@keyframes scanEnter {
+  from { transform: translateY(-100%); opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+/* ---- Chart animated draw ---- */
+@keyframes chartDraw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ---- LED countdown digits ---- */
+.led-digit {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--cyan);
+  text-shadow:
+    0 0 10px var(--cyan),
+    0 0 30px rgba(0,255,255,0.4);
+  display: block;
+  letter-spacing: 4px;
+  animation: ledPulse 1s ease-in-out infinite;
+}
+@keyframes ledPulse {
+  0%,100% { text-shadow: 0 0 10px var(--cyan), 0 0 30px rgba(0,255,255,0.4); }
+  50%      { text-shadow: 0 0 20px var(--cyan), 0 0 60px rgba(0,255,255,0.7); }
+}
+
+/* ---- Voting ripple animation ---- */
+@keyframes voteRipple {
+  0%   { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+.ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--saffron);
+  animation: voteRipple 1.5s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ---- Chatbot message slide ---- */
+.chat-msg {
+  animation: chatSlideIn 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+.chat-msg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,153,51,0.05) 0%, transparent 100%);
+  animation: scanMsgIn 0.5s ease-out forwards;
+}
+@keyframes chatSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scanMsgIn {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+/* ---- Avatar choice pop ---- */
+@keyframes avatarPop {
+  0%   { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  60%  { transform: scale(1.1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.avatar-pop { animation: avatarPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ---- Timeline items ---- */
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---- Impact flow animation ---- */
+@keyframes flowRight {
+  0%,100% { stroke-dashoffset: 60; }
+  50%      { stroke-dashoffset: 0; }
+}
+
+/* ---- Button glitch hover ---- */
+.btn-glitch {
+  position: relative;
+  overflow: hidden;
+}
+.btn-glitch:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  animation: btnGlitch 0.3s ease;
+}
+@keyframes btnGlitch {
+  0%   { clip-path: inset(20% 0 60% 0); transform: translateX(-5px); }
+  25%  { clip-path: inset(50% 0 30% 0); transform: translateX(5px); }
+  50%  { clip-path: inset(80% 0 0 0);   transform: translateX(-3px); }
+  75%  { clip-path: inset(0 0 80% 0);   transform: translateX(3px); }
+  100% { clip-path: inset(0); transform: translateX(0); }
+}
+
+/* ---- Glow trail on card reveal ---- */
+@keyframes glowTrail {
+  from { box-shadow: 0 40px 80px rgba(255,153,51,0.6), 0 0 30px rgba(255,153,51,0.4); }
+  to   { box-shadow: 0 0 20px rgba(255,153,51,0.15); }
+}
+.card-reveal-anim {
+  animation: flipInBottom 0.5s ease-out, glowTrail 0.8s ease-out 0.5s forwards;
+}

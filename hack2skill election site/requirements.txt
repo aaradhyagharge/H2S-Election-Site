@@ -1,0 +1,16 @@
+flask==3.0.2
+flask-sqlalchemy
+flask-cors==4.0.0
+flask-socketio==5.3.6
+requests==2.31.0
+beautifulsoup4==4.12.3
+rapidfuzz
+python-dotenv==1.0.1
+Pillow
+geopy==2.4.1
+deep-translator==1.11.4
+bcrypt==4.1.2
+pyjwt==2.8.0
+SQLAlchemy>=2.0.38
+alembic==1.13.1
+gunicorn==21.2.0

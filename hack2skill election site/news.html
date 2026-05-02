@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Election News | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 📰</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="news_title">Latest Election News</h1>
+        <p class="devanagari">ताज्या बातम्या — अधिकृत निवडणूक माहिती</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="grid-3" id="news-grid">
+                <!-- News items injected here -->
+                <div class="text-center p-4"><span class="spinner"></span></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script>
+        async function loadNews() {
+            const grid = document.getElementById('news-grid');
+            try {
+                const res = await fetch('/api/news');
+                const news = await res.json();
+                
+                if (news.length === 0) {
+                    grid.innerHTML = '<p class="text-center text-muted">No news updates at the moment.</p>';
+                    return;
+                }
+
+                grid.innerHTML = news.map(item => `
+                    <div class="hud-card reveal visible">
+                        <div class="text-muted mb-1" style="font-size:0.75rem;">${new Date(item.date).toLocaleDateString()}</div>
+                        <h3 class="mb-2" style="font-size:1.1rem; color:var(--saffron);">${item.title}</h3>
+                        <p style="font-size:0.9rem; margin-bottom:1rem; opacity:0.8;">${item.summary}</p>
+                        <a href="${item.url}" target="_blank" class="badge-tag cyan" style="text-decoration:none;">Read More →</a>
+                    </div>
+                `).join('');
+
+            } catch (err) {
+                grid.innerHTML = '<p class="text-center text-muted">Error loading news. Make sure the server is running.</p>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadNews);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

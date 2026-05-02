@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Vote Count Simulation | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 📊</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="live_count_title">Live Vote Count (Simulation)</h1>
+        <p class="devanagari">मतदान मोजणी सिम्युलेशन — रिअल-टाइम निकाल</p>
+        <div class="disclaimer-badge">⚠️ Strictly for Educational Purposes | Non-Partisan</div>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="hud-card mb-4 text-center">
+                <h3 class="mb-2">Total Seats: 543 | Majority: 272</h3>
+                <div class="majority-progress-bar">
+                    <div class="progress-fill saffron" style="width: 45%;"></div>
+                    <div class="progress-fill green" style="width: 35%;"></div>
+                    <div class="progress-marker" style="left: 50%;"></div>
+                </div>
+                <div class="d-flex justify-between mt-1 text-muted" style="font-size:0.8rem;">
+                    <span>Alliance A: 244</span>
+                    <span>Majority Line</span>
+                    <span>Alliance B: 190</span>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="hud-card reveal visible">
+                    <h3 class="mb-2">Alliance-wise Trends</h3>
+                    <canvas id="live-chart" height="300"></canvas>
+                </div>
+                <div class="hud-card reveal visible">
+                    <h3 class="mb-2">Leading Candidates</h3>
+                    <table id="trends-table">
+                        <thead>
+                            <tr>
+                                <th>Constituency</th>
+                                <th>Leading</th>
+                                <th>Party</th>
+                                <th>Margin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Varanasi</td><td>Narendra Modi</td><td>BJP</td><td>+1.2L</td></tr>
+                            <tr><td>Wayanad</td><td>Rahul Gandhi</td><td>INC</td><td>+85K</td></tr>
+                            <tr><td>Baramati</td><td>Supriya Sule</td><td>NCP</td><td>+42K</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script>
+        const ctx = document.getElementById('live-chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['NDA', 'INDIA', 'Others'],
+                datasets: [{
+                    data: [292, 234, 17],
+                    backgroundColor: ['#FF9933', '#138808', '#000080'],
+                    borderColor: '#0A0A0A',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                }
+            }
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

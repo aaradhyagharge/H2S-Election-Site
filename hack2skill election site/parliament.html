@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parliament Profiles | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 🏛️</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="parliament_title">Parliament Profiles</h1>
+        <p class="devanagari">लोकसभा आणि विधानसभा प्रतिनिधी</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <!-- Political Parties Section -->
+            <div class="section-title reveal">
+                <h2 data-i18n="parties_title">Major Political Parties</h2>
+            </div>
+            <div class="grid-4 mb-3" id="parties-grid">
+                <div class="text-center p-4"><span class="spinner"></span></div>
+            </div>
+
+            <hr style="opacity:0.1; margin:3rem 0;">
+
+            <!-- Members Section -->
+            <div class="section-title reveal">
+                <h2 data-i18n="members_title">Members of Parliament (MPs)</h2>
+            </div>
+            
+            <div class="hud-card mb-3">
+                <div class="d-flex gap-2">
+                    <input type="text" id="member-search" data-i18n-placeholder="member_search_placeholder" placeholder="Search by name, party, or constituency..." style="flex:1;">
+                    <select id="party-filter" style="width:200px;">
+                        <option value="">All Parties</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid-3" id="members-grid">
+                <!-- Members injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script src="js/parliament.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

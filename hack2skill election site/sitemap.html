@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 🗺️</a>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1>Sitemap</h1>
+        <p class="devanagari">साईटमॅप — सर्व पृष्ठे एका दृष्टीक्षेपात</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="hud-card reveal visible">
+                <div class="sitemap-tree">
+                    <ul>
+                        <li><a href="index.html">🏠 Home</a>
+                            <ul>
+                                <li><a href="voter-id-guide.html">🪪 Voter ID Guide</a></li>
+                                <li><a href="game.html">🎮 Operation Matdan (Game)</a></li>
+                                <li><a href="chatbot.html">🤖 Bharat Bot (AI Chat)</a></li>
+                                <li><a href="polling-booth.html">📍 Find Your Booth</a></li>
+                                <li><a href="live-count.html">📊 Live Count Simulation</a></li>
+                                <li><a href="news.html">📰 Latest Election News</a></li>
+                                <li><a href="history.html">📜 Election History</a></li>
+                                <li><a href="parliament.html">🏛️ Parliament Profiles</a></li>
+                                <li><a href="impact.html">📈 Vote Impact Visualizer</a></li>
+                                <li><a href="glossary.html">📚 Election Glossary</a></li>
+                                <li><a href="login.html">🔑 Login / Register</a></li>
+                                <li><a href="sitemap.html" class="text-saffron">🗺️ Sitemap</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .sitemap-tree ul { padding-left: 2rem; list-style: none; }
+        .sitemap-tree li { margin: 1rem 0; position: relative; }
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 1px;
+            background: var(--saffron);
+        }
+        .sitemap-tree a { text-decoration: none; font-size: 1.1rem; transition: color 0.3s; }
+        .sitemap-tree a:hover { color: var(--ind-green); }
+    </style>
+
+    <script src="js/translate.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

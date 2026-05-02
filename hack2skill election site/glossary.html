@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Glossary | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 📚</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="glossary_title">Election Glossary</h1>
+        <p class="devanagari">शब्दकोश — निवडणूक प्रक्रिया समजून घ्या</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="hud-card mb-3">
+                <input type="text" id="glossary-search" data-i18n-placeholder="glossary_search" placeholder="Search terms...">
+                <div class="alpha-filter mt-2" id="alpha-filter">
+                    <!-- A-Z buttons injected here -->
+                </div>
+            </div>
+
+            <div id="glossary-container">
+                <!-- Term cards injected here -->
+                <div class="text-center p-4"><span class="spinner"></span></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script>
+        async function loadGlossary() {
+            const container = document.getElementById('glossary-container');
+            const alphaBox = document.getElementById('alpha-filter');
+            
+            // Create A-Z buttons
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            alphaBox.innerHTML = alphabet.map(char => `<button class="alpha-btn">${char}</button>`).join('');
+
+            try {
+                const res = await fetch('/api/glossary');
+                const terms = await res.json();
+                renderTerms(terms);
+
+                document.getElementById('glossary-search').addEventListener('input', (e) => {
+                    const q = e.target.value.toLowerCase();
+                    const filtered = terms.filter(t => 
+                        t.term.en.toLowerCase().includes(q) || 
+                        t.term.hi.includes(q) || 
+                        t.term.mr.includes(q)
+                    );
+                    renderTerms(filtered);
+                });
+
+                document.querySelectorAll('.alpha-btn').forEach(btn => {
+                    btn.onclick = () => {
+                        document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const char = btn.textContent;
+                        const filtered = terms.filter(t => t.term.en.toUpperCase().startsWith(char));
+                        renderTerms(filtered);
+                    };
+                });
+
+            } catch (err) {
+                container.innerHTML = '<p class="text-center text-muted">Error loading terms. Make sure the server is running.</p>';
+            }
+        }
+
+        function renderTerms(terms) {
+            const container = document.getElementById('glossary-container');
+            const lang = window.getCurrentLang ? window.getCurrentLang() : 'en';
+
+            if (terms.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">No terms found.</p>';
+                return;
+            }
+
+            container.innerHTML = terms.map(t => `
+                <div class="term-card reveal visible" onclick="this.classList.toggle('open')">
+                    <div class="d-flex justify-between align-center">
+                        <div>
+                            <div class="term-en">${t.term.en}</div>
+                            <div class="term-hi">${t.term.hi} | ${t.term.mr}</div>
+                        </div>
+                        <div class="badge-tag">${t.category || 'General'}</div>
+                    </div>
+                    <div class="term-definition">${t.definition[lang]}</div>
+                    <div class="term-detail">
+                        <hr style="opacity:0.1; margin:1rem 0;">
+                        <p style="font-size:0.85rem; color:var(--cyan);"><b>Example:</b> Factual example or usage case for ${t.term.en}.</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGlossary);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

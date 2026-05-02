@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ | Indian Election Learning Platform</title>
+  <meta name="description" content="MATDAN is India's most comprehensive digital learning platform for understanding the Indian election process, voter registration, and civic duties. Powered by AI.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Ashoka Chakra background watermark -->
+  <svg id="chakra-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="90" stroke="#FF9933" stroke-width="2"/>
+    <circle cx="100" cy="100" r="15" fill="#FF9933"/>
+    <g id="chakra-spokes">
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke="#FF9933" stroke-width="1"/>
+      <line x1="27" y1="27" x2="173" y2="173" stroke="#FF9933" stroke-width="1"/>
+      <line x1="173" y1="27" x2="27" y2="173" stroke="#FF9933" stroke-width="1"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(22.5 100 100)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(45 100 100)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(67.5 100 100)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(112.5 100 100)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(135 100 100)"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1" transform="rotate(157.5 100 100)"/>
+    </g>
+  </svg>
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 🇮🇳</a>
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="navbar-links" id="navbar-links">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="voter-id-guide.html" data-i18n="nav_voterID">Voter ID</a></li>
+      <li><a href="live-count.html" data-i18n="nav_livecount">Live Count</a></li>
+      <li><a href="news.html" data-i18n="nav_news">News</a></li>
+      <li><a href="game.html" data-i18n="nav_game">Game 🎮</a></li>
+      <li><a href="chatbot.html" data-i18n="nav_chatbot">Bharat Bot</a></li>
+      <li><a href="history.html" data-i18n="nav_history">History</a></li>
+      <li><a href="polling-booth.html" data-i18n="nav_booth">Find Booth</a></li>
+      <li><a href="glossary.html" data-i18n="nav_glossary">Glossary</a></li>
+      <li><a href="impact.html" data-i18n="nav_impact">Vote Impact</a></li>
+      <li><a href="parliament.html" data-i18n="nav_parliament">Parliament</a></li>
+      <li><a href="login.html" class="btn-primary" style="padding:0.3rem 1rem;font-size:0.8rem;" data-i18n="nav_login">Login</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">EN</button>
+      <button class="lang-btn" data-lang="hi" onclick="switchLanguage('hi')">हिं</button>
+      <button class="lang-btn" data-lang="mr" onclick="switchLanguage('mr')">मर</button>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="flag-ribbon"></div>
+    <div class="hero-content">
+      <span class="hero-marathi">🇮🇳 मतदान करा, देश घडवा &nbsp;|&nbsp; जय हिंद &nbsp;|&nbsp; जय भारत</span>
+      <h1 class="hero-title">
+        <span class="glitch" data-text="MATDAN">MATDAN</span><br>
+        <span class="accent" data-i18n="hero_headline">Understand. Vote. Shape India.</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_sub">Your one-stop platform for the complete Indian election process — in your language, at your pace.</p>
+      <div class="hero-buttons">
+        <a href="voter-id-guide.html" class="btn-primary btn-glitch" data-text="Register to Vote" data-i18n="hero_cta1">Register to Vote</a>
+        <a href="game.html" class="btn-secondary" data-i18n="hero_cta2">Play Election Game</a>
+      </div>
+      <p class="devanagari text-muted mt-3" style="font-size:1rem;">लोकशाही आपली ताकद आहे &nbsp;•&nbsp; एक मत, एक बदल &nbsp;•&nbsp; मतदार राजा आहे</p>
+    </div>
+    <!-- Inline SVG Chakra for hero BG -->
+    <svg class="hero-bg-chakra" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="90" stroke="#FF9933" stroke-width="2"/>
+      <circle cx="100" cy="100" r="15" fill="#FF9933" opacity="0.3"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#FF9933" stroke-width="1"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke="#FF9933" stroke-width="1"/>
+      <line x1="27" y1="27" x2="173" y2="173" stroke="#FF9933" stroke-width="1"/>
+      <line x1="173" y1="27" x2="27" y2="173" stroke="#FF9933" stroke-width="1"/>
+    </svg>
+  </section>
+
+  <div class="tricolor-bar"></div>
+
+  <!-- ==================== COUNTDOWN ==================== -->
+  <section class="countdown-section">
+    <div class="section-container text-center">
+      <h2 data-i18n="countdown_title" class="text-saffron" style="font-size:1.2rem;letter-spacing:2px;">COUNTDOWN TO 2029 LOK SABHA ELECTIONS</h2>
+      <div class="countdown-grid">
+        <div class="countdown-box hud-scan-enter">
+          <span class="led-digit" id="cd-days">--</span>
+          <span class="unit-label" data-i18n="countdown_days">Days</span>
+        </div>
+        <div class="countdown-box hud-scan-enter">
+          <span class="led-digit" id="cd-hours">--</span>
+          <span class="unit-label" data-i18n="countdown_hours">Hours</span>
+        </div>
+        <div class="countdown-box hud-scan-enter">
+          <span class="led-digit" id="cd-mins">--</span>
+          <span class="unit-label" data-i18n="countdown_mins">Mins</span>
+        </div>
+        <div class="countdown-box hud-scan-enter">
+          <span class="led-digit" id="cd-secs">--</span>
+          <span class="unit-label" data-i18n="countdown_secs">Secs</span>
+        </div>
+      </div>
+      <p class="devanagari text-muted mt-2">Har Vote Matters | हर वोट मायने रखता है</p>
+    </div>
+  </section>
+
+  <!-- ==================== ANALYTICS ==================== -->
+  <section class="section">
+    <div class="section-container">
+      <div class="section-title reveal">
+        <h2 data-i18n="analytics_title">Election Analytics Dashboard</h2>
+      </div>
+      <!-- Stat cards -->
+      <div class="grid-4 mb-3">
+        <div class="stat-card reveal"><span class="stat-number" data-target="960000000">0</span><span class="stat-label" data-i18n="stat_voters">Registered Voters</span></div>
+        <div class="stat-card reveal"><span class="stat-number" data-target="36">0</span><span class="stat-label" data-i18n="stat_states">States &amp; UTs</span></div>
+        <div class="stat-card reveal"><span class="stat-number" data-target="1050000">0</span><span class="stat-label" data-i18n="stat_booths">Polling Booths</span></div>
+        <div class="stat-card reveal"><span class="stat-number" data-target="18000000">0</span><span class="stat-label" data-i18n="stat_first">First-Time Voters</span></div>
+      </div>
+      <div class="grid-2">
+        <div class="hud-card reveal">
+          <h3 class="mb-2" data-i18n="analytics_gender">Gender-wise Voter Turnout</h3>
+          <canvas id="gender-chart" height="250"></canvas>
+        </div>
+        <div class="hud-card reveal" style="overflow-x:auto;">
+          <h3 class="mb-2" data-i18n="analytics_states">State-wise Turnout</h3>
+          <div style="height:300px;overflow-y:auto;">
+            <canvas id="state-chart" style="min-height:600px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tricolor-bar"></div>
+
+  <!-- ==================== CHATBOT SECTION ==================== -->
+  <section class="section" style="background:radial-gradient(ellipse at center,rgba(0,0,128,0.08),transparent);">
+    <div class="section-container">
+      <div class="section-title reveal">
+        <h2 data-i18n="chatbot_title">Bharat Bot — Your Election Assistant</h2>
+        <p class="devanagari text-muted">संविधानाचे रक्षण करा &nbsp;|&nbsp; सवाल पूछो, जवाब पाओ</p>
+      </div>
+      <div class="grid-2 align-center">
+        <div class="hud-card hud-scan-enter reveal">
+          <div style="text-align:center;padding:2rem 0;">
+            <div style="font-size:5rem;">🤖</div>
+            <h3 style="color:var(--saffron);margin:1rem 0 0.5rem;">भारत बॉट</h3>
+            <p class="text-muted">Ask about elections in <strong>English</strong>, <strong>हिंदी</strong>, or <strong>मराठी</strong></p>
+            <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
+              <span class="badge-tag">EVM?</span>
+              <span class="badge-tag green">Form 6?</span>
+              <span class="badge-tag cyan">Voter ID?</span>
+              <span class="badge-tag">VVPAT?</span>
+              <span class="badge-tag green">NOTA?</span>
+            </div>
+          </div>
+        </div>
+        <div class="hud-card reveal" style="padding:0;">
+          <div class="chatbot-header">
+            <div class="bot-status"><span class="live-dot"></span>BHARAT BOT — ONLINE</div>
+            <a href="chatbot.html" class="badge-tag" style="cursor:pointer;text-decoration:none;">Full Page →</a>
+          </div>
+          <div class="chatbot-messages" id="chatbot-messages" style="max-height:300px;"></div>
+          <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" data-i18n-placeholder="chatbot_placeholder" placeholder="Ask me about elections...">
+            <button id="chatbot-send" data-i18n="chatbot_send">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUICK LINKS ==================== -->
+  <section class="section">
+    <div class="section-container">
+      <div class="section-title reveal"><h2>Explore the Platform</h2></div>
+      <div class="grid-3">
+        <a href="game.html" class="hud-card reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">🎮</div>
+          <h3 class="text-center">Operation Matdan</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">निवडणूक रहस्य — An interactive election mystery game</p>
+        </a>
+        <a href="polling-booth.html" class="hud-card reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">🗺️</div>
+          <h3 class="text-center">Find Your Booth</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">तुमचे मतदान केंद्र शोधा — Locate your polling booth</p>
+        </a>
+        <a href="history.html" class="hud-card green-variant reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">📜</div>
+          <h3 class="text-center">Election History</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">1947 to 2024 — complete Indian election timeline</p>
+        </a>
+        <a href="voter-id-guide.html" class="hud-card reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">🪪</div>
+          <h3 class="text-center">Voter ID Guide</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">आपला मतदार ओळखपत्र, आपला अधिकार</p>
+        </a>
+        <a href="impact.html" class="hud-card reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">📊</div>
+          <h3 class="text-center">Vote Impact</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">आपल्या मताचा प्रभाव — See how your vote matters</p>
+        </a>
+        <a href="glossary.html" class="hud-card green-variant reveal card-reveal-anim" style="text-decoration:none;display:block;">
+          <div style="font-size:3rem;text-align:center;margin-bottom:1rem;">📚</div>
+          <h3 class="text-center">Election Glossary</h3>
+          <p class="text-muted text-center" style="font-size:0.9rem;">50+ terms in English, हिंदी, मराठी</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT / HELP ==================== -->
+  <section class="section" id="contact" style="background:rgba(0,0,0,0.3);">
+    <div class="section-container">
+      <div class="section-title reveal">
+        <h2 data-i18n="contact_title">Voter Help Center</h2>
+        <p class="devanagari text-muted">मतदाराचे प्रश्न? आम्ही मदतीसाठी इथे आहोत.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="helpline-item">
+            <div class="helpline-icon">📞</div>
+            <div><div class="text-muted" style="font-size:0.8rem;" data-i18n="contact_tollfree">Toll-Free</div><div class="helpline-num">1950</div></div>
+          </div>
+          <div class="helpline-item">
+            <div class="helpline-icon">🌐</div>
+            <div><div class="text-muted" style="font-size:0.8rem;">Official ECI Website</div><a href="https://voters.eci.gov.in" target="_blank" style="color:var(--cyan);font-family:var(--font-mono);">voters.eci.gov.in</a></div>
+          </div>
+          <div class="helpline-item">
+            <div class="helpline-icon">📱</div>
+            <div><div class="text-muted" style="font-size:0.8rem;">Track Voter ID via SMS</div><div class="helpline-num" style="font-size:1rem;">SMS EPIC to 1950</div></div>
+          </div>
+          <div class="live-support-badge"><span class="live-dot"></span> Live Support Available 9AM–6PM IST</div>
+        </div>
+        <div class="hud-card reveal">
+          <h3 class="mb-2">Submit a Support Request</h3>
+          <form id="support-form">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" name="full_name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" placeholder="email@example.com" required>
+            </div>
+            <div class="form-group">
+              <label>Issue Type</label>
+              <select name="issue_type">
+                <option value="Voter ID">Voter ID</option>
+                <option value="Booth Location">Booth Location</option>
+                <option value="Registration">Registration</option>
+                <option value="Complaint">Complaint</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea name="message" rows="3" placeholder="Describe your issue..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;">Submit Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">MATDAN 🇮🇳</div>
+        <div class="footer-slogans">
+          भारत माता की जय 🇮🇳<br>
+          इंकलाब जिंदाबाद | Jai Hind<br>
+          वंदे मातरम | जय भारत<br>
+          Democracy runs on YOUR vote<br>
+          मतदान हे आपले कर्तव्य आहे
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Pages</h4>
+        <a href="voter-id-guide.html">Voter ID Guide</a>
+        <a href="live-count.html">Live Count</a>
+        <a href="news.html">News</a>
+        <a href="game.html">Election Game</a>
+        <a href="chatbot.html">Bharat Bot</a>
+      </div>
+      <div class="footer-links">
+        <h4>Information</h4>
+        <a href="history.html">Election History</a>
+        <a href="polling-booth.html">Find Booth</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="impact.html">Vote Impact</a>
+        <a href="parliament.html">Parliament</a>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+      <div class="footer-links">
+        <h4>Official Links</h4>
+        <a href="https://voters.eci.gov.in" target="_blank">voters.eci.gov.in</a>
+        <a href="https://eci.gov.in" target="_blank">eci.gov.in</a>
+        <a href="https://nvsp.in" target="_blank">nvsp.in</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-chakra">☸</div>
+      <div class="social-icons">
+        <a href="#">𝕏</a><a href="#">📘</a><a href="#">📸</a><a href="#">▶️</a>
+      </div>
+      <p class="mt-2" data-i18n="footer_rights">All rights reserved. Content is neutral and for educational purposes only.</p>
+      <p style="margin-top:0.5rem;color:rgba(255,255,255,0.2);font-size:0.75rem;">
+        Built for Hack2Skill Prompt Wars (Google) &nbsp;|&nbsp; Data Source: ECI &nbsp;|&nbsp; Strictly Neutral &amp; Non-Partisan
+      </p>
+    </div>
+  </footer>
+
+  <!-- Floating Chatbot Button -->
+  <a id="chatbot-float-btn" title="Ask Bharat Bot">🤖</a>
+  <!-- Chatbot Widget -->
+  <div id="chatbot-widget">
+    <div class="chatbot-header">
+      <div class="bot-status"><span class="live-dot"></span> BHARAT BOT</div>
+      <button id="chatbot-close" style="background:none;border:none;color:#FF9933;cursor:pointer;font-size:1.2rem;">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbot-messages"></div>
+    <div class="chatbot-input-area">
+      <input type="text" id="chatbot-input" placeholder="Ask about elections...">
+      <button id="chatbot-send">Send</button>
+    </div>
+  </div>
+
+  <script src="js/particles.js"></script>
+  <script src="js/translate.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

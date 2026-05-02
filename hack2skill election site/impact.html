@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Impact Visualizer | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 📊</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="impact_title">Your Vote Matters</h1>
+        <p class="devanagari">तुमच्या मताचा प्रभाव — लोकशाहीत प्रत्येक मत महत्त्वाचे आहे</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="grid-2 align-center">
+                <div class="reveal">
+                    <h2 class="text-saffron mb-2">Can one vote change the outcome?</h2>
+                    <p class="mb-3" style="line-height:1.6;">
+                        History shows that elections can be decided by incredibly narrow margins. 
+                        Our impact visualizer uses factual data from past Indian elections to show you exactly how close some races have been.
+                    </p>
+                    <div class="hud-card green-variant">
+                        <div style="font-size:1.5rem; font-weight:700;">DID YOU KNOW?</div>
+                        <p style="font-size:0.9rem; margin-top:0.5rem;">
+                            In the 2008 Rajasthan Assembly elections, CP Joshi lost from Nathdwara by just <b>1 vote</b>!
+                        </p>
+                    </div>
+                </div>
+                <div class="hud-card reveal">
+                    <h3 class="mb-2">Close Margin Analysis</h3>
+                    <canvas id="impact-chart" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div class="section-title reveal">
+                    <h2>Historical Narrow Victories</h2>
+                </div>
+                <div class="grid-3" id="impact-list">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script>
+        async function loadImpactData() {
+            try {
+                const res = await fetch('/api/impact/data');
+                const data = await res.json();
+                
+                renderChart(data);
+                renderList(data);
+            } catch (err) {
+                console.error('Error loading impact data', err);
+            }
+        }
+
+        function renderChart(data) {
+            const ctx = document.getElementById('impact-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.constituency),
+                    datasets: [{
+                        label: 'Winning Margin (Votes)',
+                        data: data.map(d => d.margin),
+                        backgroundColor: '#FF9933',
+                        borderColor: '#FFD700',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { ticks: { color: '#fff' } }
+                    }
+                }
+            });
+        }
+
+        function renderList(data) {
+            const list = document.getElementById('impact-list');
+            list.innerHTML = data.map(d => `
+                <div class="hud-card reveal visible">
+                    <div class="text-saffron" style="font-size:1.2rem; font-weight:700;">${d.margin} VOTE MARGIN</div>
+                    <div class="mb-1"><b>${d.constituency}</b> (${d.year})</div>
+                    <div class="text-muted" style="font-size:0.85rem;">Winner: ${d.winner}</div>
+                    <div class="text-muted" style="font-size:0.85rem;">Runner up: ${d.runner_up}</div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadImpactData);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

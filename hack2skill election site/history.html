@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election History Timeline | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 📜</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <header class="page-header reveal visible">
+        <h1 data-i18n="history_title">History of Indian Elections</h1>
+        <p class="devanagari">१९४७ ते २०२४ — लोकशाहीचा प्रवास</p>
+    </header>
+
+    <main class="section">
+        <div class="section-container">
+            <div class="timeline" id="timeline-container">
+                <!-- Timeline items injected here -->
+                <div class="text-center"><span class="spinner"></span></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translate.js"></script>
+    <script>
+        async function loadHistory() {
+            const container = document.getElementById('timeline-container');
+            try {
+                const res = await fetch('/api/history');
+                const history = await res.json();
+                
+                if (history.length === 0) {
+                    container.innerHTML = '<p class="text-center text-muted">No history data found.</p>';
+                    return;
+                }
+
+                container.innerHTML = history.map((item, idx) => `
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot">${idx + 1}</div>
+                        <div class="timeline-card">
+                            <span class="timeline-year">${item.year}</span>
+                            <h3 class="text-saffron mb-1">${item.name}</h3>
+                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.8); line-height:1.5;">${item.events || 'No details available for this period.'}</p>
+                            <div class="mt-2 d-flex gap-2">
+                                <span class="badge-tag green">${item.winning_party || 'N/A'}</span>
+                                ${item.prime_minister ? `<span class="badge-tag cyan">PM: ${item.prime_minister}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Observe new items
+                document.querySelectorAll('.timeline-item').forEach(el => revealObserver.observe(el));
+
+            } catch (err) {
+                container.innerHTML = '<p class="text-center text-muted">Error loading history. Make sure the server is running.</p>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadHistory);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Bot | MATDAN — भारतीय निवडणूक शिक्षण व्यासपीठ</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body style="overflow:hidden;">
+    <canvas id="particle-canvas"></canvas>
+    
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 🤖</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <main class="chatbot-fullscreen">
+        <div class="chatbot-container-full hud-card">
+            <div class="chatbot-sidebar">
+                <h3 class="mb-2 text-saffron">Bharat Bot 🇮🇳</h3>
+                <p class="text-muted mb-3" style="font-size:0.8rem;">Your AI guide to Indian Democracy.</p>
+                
+                <div class="suggested-topics">
+                    <div class="topic-tag" onclick="fillInput('How do I register to vote?')">Register to Vote</div>
+                    <div class="topic-tag" onclick="fillInput('What is VVPAT?')">What is VVPAT?</div>
+                    <div class="topic-tag" onclick="fillInput('How to find my polling booth?')">Find Polling Booth</div>
+                    <div class="topic-tag" onclick="fillInput('What is NOTA?')">What is NOTA?</div>
+                </div>
+
+                <div class="bot-info-card mt-auto">
+                    <small>Powered by NLP & Official ECI Data. Always provides neutral, factual responses.</small>
+                </div>
+            </div>
+            
+            <div class="chatbot-main">
+                <div class="chatbot-messages" id="chatbot-messages" style="flex:1;">
+                    <!-- Messages injected by JS -->
+                </div>
+                <div class="chatbot-input-area">
+                    <input type="text" id="chatbot-input" placeholder="Ask me anything about Indian elections...">
+                    <button id="chatbot-send">SEND</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function fillInput(text) {
+            const input = document.getElementById('chatbot-input');
+            input.value = text;
+            input.focus();
+        }
+    </script>
+    <script src="js/particles.js"></script>
+    <script src="js/translate.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

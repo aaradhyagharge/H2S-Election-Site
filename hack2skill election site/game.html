@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Matdan — निवडणूक रहस्य | Election Mystery Game</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="game-container">
+    <canvas id="particle-canvas"></canvas>
+    
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo"><span>MAT</span>DAN 🎮</a>
+        <div class="score-display">
+            <div class="text-muted" style="font-size:0.8rem;">SCORE</div>
+            <div class="score-val" id="game-score">0000</div>
+        </div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" data-lang="hi" onclick="switchLanguage('hi')">हिं</button>
+            <button class="lang-btn" data-lang="mr" onclick="switchLanguage('mr')">मर</button>
+        </div>
+    </nav>
+
+    <div class="chapter-tracker" id="chapter-tracker">
+        <div class="chapter-dot active" data-chapter="1">1</div>
+        <div class="chapter-dot" data-chapter="2">2</div>
+        <div class="chapter-dot" data-chapter="3">3</div>
+        <div class="chapter-dot" data-chapter="4">4</div>
+        <div class="chapter-dot" data-chapter="5">5</div>
+    </div>
+
+    <main class="game-scene" id="game-scene">
+        <!-- Start Screen -->
+        <div id="start-screen" class="hud-card reveal visible">
+            <h1 class="text-center mb-2" data-i18n="game_title">Operation Matdan</h1>
+            <p class="text-center text-saffron mb-3" data-i18n="game_subtitle">निवडणूक रहस्य — An Interactive Election Mystery</p>
+            
+            <div class="scene-image">🎭</div>
+            
+            <p class="story-text text-center">
+                Welcome, Nagarik. You are a first-time voter in the village of Rampur. 
+                Strange rumors are spreading, and people are afraid to vote. 
+                Your mission: Uncover the truth, help your fellow citizens, and ensure democracy wins.
+            </p>
+
+            <div class="avatar-select">
+                <div class="avatar-option selected" data-avatar="boy">
+                    <div class="avatar-img">👦</div>
+                    <div class="text-muted">Aryan</div>
+                </div>
+                <div class="avatar-option" data-avatar="girl">
+                    <div class="avatar-img">👧</div>
+                    <div class="text-muted">Anaya</div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width:100%;" id="start-game-btn" data-i18n="game_start">Begin Your Journey</button>
+        </div>
+
+        <!-- Gameplay Area (Hidden initially) -->
+        <div id="gameplay-area" class="hidden">
+            <div class="scene-panel hud-scan-enter">
+                <div class="scene-image" id="scene-image">🏮</div>
+                <div class="story-text" id="scene-text">
+                    Loading story...
+                </div>
+                
+                <div class="choice-buttons" id="choice-buttons">
+                    <!-- Choices will be injected here -->
+                </div>
+            </div>
+            
+            <div id="feedback-panel" class="hud-card green-variant hidden mt-3">
+                <h3 id="feedback-title" class="mb-1">Result</h3>
+                <p id="feedback-text" class="mb-2"></p>
+                <button class="btn-secondary" id="next-scene-btn" style="width:100%;">Continue</button>
+            </div>
+        </div>
+
+        <!-- End Screen (Hidden initially) -->
+        <div id="end-screen" class="hud-card reveal hidden text-center">
+            <h1 class="text-saffron mb-2">Victory!</h1>
+            <p class="mb-3">You have completed Operation Matdan and protected the democracy of Rampur.</p>
+            
+            <div style="font-size:4rem; margin: 2rem 0;">🏆</div>
+            
+            <div class="stat-card mb-3">
+                <div class="stat-label">FINAL SCORE</div>
+                <div class="stat-number" id="final-score">0</div>
+            </div>
+
+            <div id="badges-container" class="d-flex justify-center gap-2 mb-3">
+                <!-- Badges will be injected here -->
+            </div>
+
+            <div class="hero-buttons">
+                <a href="index.html" class="btn-primary">Return Home</a>
+                <button class="btn-secondary" onclick="location.reload()">Play Again</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/particles.js"></script>
+    <script src="js/translate.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
